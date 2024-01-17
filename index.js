@@ -19,7 +19,7 @@ app.use(cors({credentials:true,origin:'https://oneshot-frontend.onrender.com'}))
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
-app.options('post',cors());
+// app.options('post',cors());
 
 const db_link = process.env.DB_LINK;
 
@@ -90,6 +90,7 @@ app.post('/post',uploadMiddleware.single('file'), async (req,res) => {
       cover:cover,
       author:info.id,
     });
+    console.log(postDoc)
     res.json(postDoc);
   });
 
