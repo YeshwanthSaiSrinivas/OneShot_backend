@@ -72,7 +72,7 @@ app.post('/logout', (req,res) => {
 });
 
 
-app.post('/post',uploadMiddleware.single('file'), async (req,res) => {
+app.post('/post', async (req,res) => {
   // const {originalname,path} = req.file;
   // const parts = originalname.split('.');
   // const ext = parts[parts.length - 1];
@@ -81,7 +81,10 @@ app.post('/post',uploadMiddleware.single('file'), async (req,res) => {
 
   const {token} = req.cookies;
   jwt.verify(token, secret, {}, async (err,info) => {
-    if (err) throw err;
+    if (err) {
+      console.log(err);
+      throw err;
+    };
     const {title,summary,content,cover} = req.body;
     const postDoc = await Post.create({
       title,
