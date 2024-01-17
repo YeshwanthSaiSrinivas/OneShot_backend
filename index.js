@@ -15,10 +15,11 @@ require("dotenv").config();
 const salt = bcrypt.genSaltSync(10);
 const secret = 'asdfe45we45w345wegw345werjktjwertkj';
 
-app.use(cors());
+app.use(cors({credentials:true,origin:'https://oneshot-frontend.onrender.com'}));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
+app.options('post',cors());
 
 const db_link = process.env.DB_LINK;
 
@@ -69,6 +70,7 @@ app.get('/profile', (req,res) => {
 app.post('/logout', (req,res) => {
   res.cookie('token', '').json('ok');
 });
+
 
 app.post('/post',uploadMiddleware.single('file'), async (req,res) => {
   // const {originalname,path} = req.file;
